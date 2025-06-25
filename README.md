@@ -1,3 +1,126 @@
+# Appointment Booking System API
+
+A RESTful backend API for appointment booking, built with NestJS, TypeScript, PostgreSQL, and TypeORM.
+
+## Features
+
+- User registration and listing
+- Service creation and listing
+- Appointment booking, cancellation, completion, and listing
+- Input validation with class-validator
+- Swagger API docs at `/api`
+- Environment config via `.env` and `.env.example`
+
+## Prerequisites
+
+- Node.js (v18+ recommended)
+- PostgreSQL (running and accessible)
+
+## Setup Instructions
+
+1. **Clone the repository or extract the ZIP**
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Configure environment variables:**
+   - Copy `.env.example` to `.env` and update values as needed:
+     ```bash
+     cp .env.example .env
+     # or manually create .env
+     ```
+   - Example `.env`:
+     ```env
+     DATABASE_HOST=localhost
+     DATABASE_PORT=5432
+     DATABASE_USERNAME=postgres
+     DATABASE_PASSWORD=yourpassword
+     DATABASE_NAME=appointment_db
+     PORT=3000
+     ```
+4. **Create the database:**
+   - In PostgreSQL, run:
+     ```sql
+     CREATE DATABASE appointment_db;
+     ```
+
+## Database Migration/Schema Generation
+
+- This project uses TypeORM's `synchronize: true` for auto schema generation in development.
+- For production, use TypeORM migrations (see TypeORM docs).
+
+## Running the Application
+
+```bash
+# Development
+npm run start:dev
+
+# Production
+npm run start:prod
+```
+
+## API Documentation
+
+- Visit [http://localhost:3000/api](http://localhost:3000/api) for Swagger UI.
+
+## Example API Requests
+
+### Register a User
+
+```bash
+curl -X POST http://localhost:3000/users \
+  -H "Content-Type: application/json" \
+  -d '{"name": "John Doe", "email": "john@example.com"}'
+```
+
+### List Users
+
+```bash
+curl http://localhost:3000/users
+```
+
+### Create a Service
+
+```bash
+curl -X POST http://localhost:3000/services \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Doctor Visit", "duration": 30}'
+```
+
+### List Services
+
+```bash
+curl http://localhost:3000/services
+```
+
+### Book an Appointment
+
+```bash
+curl -X POST http://localhost:3000/appointments \
+  -H "Content-Type: application/json" \
+  -d '{"userId": "<USER_ID>", "serviceId": "<SERVICE_ID>", "scheduledAt": "2025-06-26T10:00:00Z"}'
+```
+
+### List Appointments
+
+```bash
+curl http://localhost:3000/appointments
+```
+
+### Cancel an Appointment
+
+```bash
+curl -X PUT http://localhost:3000/appointments/<APPOINTMENT_ID>/cancel
+```
+
+### Complete an Appointment
+
+```bash
+curl -X PUT http://localhost:3000/appointments/<APPOINTMENT_ID>/complete
+```
+
+---
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
